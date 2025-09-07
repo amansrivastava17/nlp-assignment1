@@ -231,11 +231,14 @@ def train_perceptron(train_exs: List[SentimentExample], feat_extractor: FeatureE
     num_features = len(feat_extractor.get_indexer())
     weights = [0.0] * num_features
     
-    num_epochs = 10
-    learning_rate = 0.1
+    num_epochs = 15
+    learning_rate = 1.0
     
     for epoch in range(num_epochs):
         num_correct = 0
+        import random
+        random.shuffle(train_exs)
+        
         for ex in train_exs:
             features = feat_extractor.extract_features(ex.words, add_to_indexer=False)
             score = sum(weights[idx] * count for idx, count in features.items())
